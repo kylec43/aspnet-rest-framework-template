@@ -6,20 +6,19 @@ using ChatApp.Database.Models;
 
 [ApiController]
 [Route("[controller]")]
-public class GetProfileController : ControllerBase
+public class GetAllProfilesController : ControllerBase
 {
     private readonly ILogger<GetAllProfilesController> _logger;
 
-    public GetProfileController(ILogger<GetAllProfilesController> logger)
+    public GetAllProfilesController(ILogger<GetAllProfilesController> logger)
     {
         _logger = logger;
     }
 
-    [HttpGet(Name = "GetProfile")]
-    public Profile? Get()
+    [HttpGet(Name = "GetAllProfiles")]
+    public IEnumerable<Profile> Get()
     {
         EntityProviderFactory providerFactory = new EntityProviderFactory();
-        
-        return providerFactory.Build<Profile>().Get(profile => profile.id == 1);
+        return providerFactory.Build<Profile>().GetAll().ToList();
     }
 }
