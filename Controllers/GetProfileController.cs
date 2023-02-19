@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
-using ChatApp.DataAccess;
-using ChatApp.Database.Models;
-
 namespace chatRestApi.Controllers;
+
+using Microsoft.AspNetCore.Mvc;
+using ChatApp.Framework.DataAccess;
+using ChatApp.Database.Models;
 
 [ApiController]
 [Route("[controller]")]
