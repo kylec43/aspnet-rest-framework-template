@@ -15,6 +15,7 @@ public class EntityProviderFactory
 
         _context = new ChatAppDbContext(options);
     }
+    
     public EntityProvider<T> Build<T>() where T : class
     {
         return new EntityProvider<T>(_context);
