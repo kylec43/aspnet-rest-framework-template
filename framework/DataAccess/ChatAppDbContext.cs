@@ -17,7 +17,6 @@ public class ChatAppDbContext : DbContext
             methodInfo.Name.Equals("Entity", StringComparison.OrdinalIgnoreCase) &&
             methodInfo.IsGenericMethod
         );
-            
     }
 
     protected override void OnModelCreating(ModelBuilder builder)  
