@@ -2,11 +2,11 @@ namespace ChatApp.Framework.DataAccess;
 
 using Microsoft.EntityFrameworkCore;
 
-public class EntityProviderFactory
+public class ProviderFactory
 {
     private readonly ChatAppDbContext _context;
 
-    public EntityProviderFactory()
+    public ProviderFactory()
     {
         string connectionString = "Server=localhost;Port=5432;Database=chatapplive;User Id=postgres;Password=admin;";
         var options = new DbContextOptionsBuilder<ChatAppDbContext>()
