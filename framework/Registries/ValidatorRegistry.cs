@@ -13,15 +13,11 @@ public class ValidatorRegistry
     */
     public ValidatorRegistry()
     {
-        var validatorTypes = ReflectionTool.GetTypesFromNameSpace(@"ChatApp[.].*Inputs");
+        var validatorTypes = ReflectionTool.GetTypesImplementingGenericType(typeof(AbstractValidator<>));
 
         // Iterate over validator type -> e.g. ProfileValidator
         foreach (var validatorType in validatorTypes)
         {
-            if (!validatorType.ToString().EndsWith("Validator"))
-            {
-                continue;
-            }
 
             // Get the validator interface IValidator<> -> AbstractValidator implements this
             var validatorInterfaceType = validatorType

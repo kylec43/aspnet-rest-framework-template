@@ -1,5 +1,9 @@
 namespace ChatApp.Database.Models;
-public class Profile {
+
+using ChatApp.Framework.Interfaces;
+
+public class Profile : IDatabaseModel
+{
     public int id { get; set; }
     public string? email { get; set; }
     public string? username { get; set; }

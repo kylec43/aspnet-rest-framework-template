@@ -1,42 +1,38 @@
 namespace ChatApp.Profile.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
-using ChatApp.Framework.DataAccess;
-using ChatApp.Database.Models;
-using ChatApp.Framework.Input;
 using ChatApp.Profile.Inputs;
 using ChatApp.Profile.Services;
+using ChatApp.Database.Models;
 
 [ApiController]
 [Route("api/profile")]
 public class GetProfileController : ControllerBase
 {
     private readonly ILogger<GetProfileController> _logger;
-    private readonly IValidationMediator _validator;
     private readonly GetProfileService getProfileService;
 
-    public GetProfileController(ILogger<GetProfileController> logger, IValidationMediator validator)
+    public GetProfileController(ILogger<GetProfileController> logger, GetProfileService getProfileService)
     {
         _logger = logger;
-        _validator = validator;
-        getProfileService = new GetProfileService();
+        this.getProfileService = getProfileService;
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Profile?> GetProfile([FromRoute] ProfileIdInput input)
+    public IActionResult GetProfile([FromRoute] ProfileIdInput input)
     {
-        var validationResult = _validator.Validate<ProfileIdInput>(input);
-        if (!validationResult.IsValid)
+        Profile? result = this.getProfileService.GetProfileById(input.id);
+        if (result == null)
         {
-            return BadRequest(validationResult.Errors);
+            return BadRequest("Unable to get profile");
         }
 
-        return Ok(getProfileService.GetProfileById(input.id));
+        return Ok(result);
     }
 
     [HttpGet("all")]
-    public ActionResult<IEnumerable<Profile>> Get()
+    public IActionResult Get()
     {
-        return Ok(getProfileService.GetAllProfiles());
+        return Ok(this.getProfileService.GetAllProfiles());
     }
 }

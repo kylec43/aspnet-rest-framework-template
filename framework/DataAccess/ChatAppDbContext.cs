@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ChatApp.Framework.Util;
 using System.Reflection;
 using System.ComponentModel.DataAnnotations.Schema;
+using ChatApp.Framework.Interfaces;
 
 public class ChatAppDbContext : DbContext
 {  
@@ -23,7 +24,7 @@ public class ChatAppDbContext : DbContext
     {  
         base.OnModelCreating(builder);
 
-        var modelTypes = ReflectionTool.GetTypesFromNameSpace("ChatApp.Database.Models");
+        var modelTypes = ReflectionTool.GetTypesImplementingInterface(typeof(IDatabaseModel));
         foreach (var modelType in modelTypes)
         {
             var tableAttribute = modelType.GetCustomAttribute<TableAttribute>();

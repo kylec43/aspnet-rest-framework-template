@@ -6,7 +6,7 @@ public class ProfileIdValidator : AbstractValidator<ProfileIdInput>
 {
     public ProfileIdValidator()
     {
-        RuleFor(input => input.id).Custom(validateId);
+        RuleFor(input => input.id).Custom(validateId).NotEmpty().WithMessage("Id Required");
     }
 
     public void validateId(int id, ValidationContext<ProfileIdInput> context)
