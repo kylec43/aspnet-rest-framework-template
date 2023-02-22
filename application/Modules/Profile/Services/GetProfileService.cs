@@ -17,7 +17,7 @@ public class GetProfileService : IService
 
     public Profile? GetProfileById(int id)
     {
-        return this.profileProvider.Get(profile => profile.id == id);
+        return this.profileProvider.Get(profile => profile.Id == id);
     }
 
     public IEnumerable<Profile> GetAllProfiles()

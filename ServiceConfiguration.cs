@@ -1,4 +1,5 @@
 using FluentValidation.AspNetCore;
+using ChatApp.Framework.DataAccess;
 
 public static class ServiceConfiguration
 {
@@ -11,5 +12,7 @@ public static class ServiceConfiguration
 
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
+
+        services.AddDbContext<ChatAppDbContext>();
     }
 }

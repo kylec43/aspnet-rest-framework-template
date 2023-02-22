@@ -8,8 +8,11 @@ using ChatApp.Framework.Interfaces;
 
 public class ChatAppDbContext : DbContext
 {  
-    public ChatAppDbContext(DbContextOptions<ChatAppDbContext> options) : base(options)  
-    {  
+    private readonly IConfiguration _configuration;
+
+    public ChatAppDbContext(IConfiguration configuration)
+    {
+        _configuration = configuration;
     }
 
     private bool GetFirstOrDefaultMethod(MethodInfo methodInfo)
@@ -38,5 +41,19 @@ public class ChatAppDbContext : DbContext
         ChangeTracker.DetectChanges();  
         return base.SaveChanges();  
     }  
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+{
+    if (!optionsBuilder.IsConfigured)
+    {
+        string? server = _configuration.GetValue<string>("DatabaseConnection:Server");
+        string? port = _configuration.GetValue<string>("DatabaseConnection:Port");
+        string? userId = _configuration.GetValue<string>("DatabaseConnection:UserId");
+        string? password = _configuration.GetValue<string>("DatabaseConnection:Password");
+        string? database = _configuration.GetValue<string>("DatabaseConnection:Database");
+
+        optionsBuilder.UseNpgsql($"Server={server};Port={port};Database={database};User Id={userId};Password={password}");
+    }
+}
 }  
 
